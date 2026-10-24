@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a8dff"/>
+      <stop offset="1" stop-color="#1b4fd6"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  <!-- Ethernet port -->
+  <path d="M332 330 H692 V600 H612 V680 H412 V600 H332 Z" fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
+  <g fill="#fff">
+    <rect x="402" y="400" width="28" height="90" rx="8"/>
+    <rect x="462" y="400" width="28" height="90" rx="8"/>
+    <rect x="534" y="400" width="28" height="90" rx="8"/>
+    <rect x="594" y="400" width="28" height="90" rx="8"/>
+  </g>
+</svg>
