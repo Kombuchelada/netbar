@@ -21,19 +21,28 @@ Click it to see the interface name (for example `Ethernet (en7)`), turn on **Ope
 brew install --cask kombuchelada/tap/netbar
 ```
 
-Netbar isn't notarized, so macOS blocks it the first time it opens. Open it once, then click **Open Anyway** in System Settings > Privacy & Security. Or run:
-
-```sh
-xattr -dr com.apple.quarantine /Applications/Netbar.app
-```
+Or download `Netbar-<version>.zip` from [Releases](../../releases), unzip it, and move **Netbar.app** to Applications. Releases are signed with a Developer ID and notarized by Apple, so it opens like any other downloaded app.
 
 Requires macOS 14 Sonoma or later.
 
 ## Build from source
 
+Requires Xcode 16 or later, or just the Xcode Command Line Tools.
+
 ```sh
 ./scripts/build-app.sh --install   # builds build/Netbar.app and copies it to ~/Applications
 ```
+
+### Releases
+
+Releases are signed with a Developer ID certificate and notarized. With the certificate in your keychain and notarization credentials saved via `xcrun notarytool store-credentials <profile>`:
+
+```sh
+SIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)" NOTARY_PROFILE=<profile> \
+  ./scripts/build-app.sh --notarize
+```
+
+This builds, signs with the hardened runtime, notarizes, staples the ticket and writes `build/Netbar-<version>.zip`, printing the values for the Homebrew cask.
 
 ## How it works
 
