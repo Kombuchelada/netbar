@@ -21,7 +21,11 @@ Click it to see the interface name (for example `Ethernet (en7)`), turn on **Ope
 brew install --cask kombuchelada/tap/netbar
 ```
 
-Or download `Netbar-<version>.zip` from [Releases](../../releases), unzip it, and move **Netbar.app** to Applications. Releases are signed with a Developer ID and notarized by Apple, so it opens like any other downloaded app.
+Or download `Netbar-<version>.pkg` from [Releases](../../releases) and open it. The installer puts Netbar in Applications and starts it. Prefer not to use an installer? Download `Netbar-<version>.zip` instead, unzip it, and move **Netbar.app** to Applications.
+
+Releases, including the installer, are signed with a Developer ID and notarized by Apple, so they open like any other download.
+
+To uninstall, quit Netbar and move it to the Trash. If you used the installer, you can also remove its receipt with `sudo pkgutil --forget io.github.kombuchelada.netbar.pkg`.
 
 Requires macOS 14 Sonoma or later.
 
@@ -35,14 +39,15 @@ Requires Xcode 16 or later, or just the Xcode Command Line Tools.
 
 ### Releases
 
-Releases are signed with a Developer ID certificate and notarized. With the certificate in your keychain and notarization credentials saved via `xcrun notarytool store-credentials <profile>`:
+Releases are signed with Developer ID Application and Developer ID Installer certificates and notarized. With both certificates in your keychain and notarization credentials saved via `xcrun notarytool store-credentials <profile>`:
 
 ```sh
-SIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)" NOTARY_PROFILE=<profile> \
-  ./scripts/build-app.sh --notarize
+SIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)" \
+INSTALLER_IDENTITY="Developer ID Installer: Your Name (TEAMID)" \
+NOTARY_PROFILE=<profile> ./scripts/build-app.sh --notarize --pkg
 ```
 
-This builds, signs with the hardened runtime, notarizes, staples the ticket and writes `build/Netbar-<version>.zip`, printing the values for the Homebrew cask.
+This builds, signs with the hardened runtime, notarizes, staples the ticket and writes `build/Netbar-<version>.zip`, printing the values for the Homebrew cask. `--pkg` also wraps the app in `build/Netbar-<version>.pkg` with `scripts/make-pkg.sh`, notarized and stapled too. The installer always installs into `/Applications`, for all users, then opens Netbar for the user at the screen (`Resources/pkg/postinstall`). Attach both files to the GitHub release.
 
 ## How it works
 
